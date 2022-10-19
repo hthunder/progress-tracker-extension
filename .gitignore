@@ -1,7 +1,4 @@
 .env
-# OS
 .DS_Store
-
-# compiled output
-/dist
-/node_modules
+dist
+node_modules
