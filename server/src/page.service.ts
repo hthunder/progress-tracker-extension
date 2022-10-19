@@ -1,17 +1,23 @@
 import { HttpService } from '@nestjs/axios';
 import { ForbiddenException, Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { catchError, map } from 'rxjs';
 import { PageDTO, PageDTOCreate } from './page.dto';
 
 @Injectable()
 export class PageService {
-  constructor(private readonly httpService: HttpService) {}
+  constructor(
+    private readonly httpService: HttpService,
+    private configService: ConfigService,
+  ) {}
 
   getPage(pageId: string) {
     return this.httpService
       .get(`https://api.notion.com/v1/pages/${pageId}`, {
         headers: {
-          Authorization: `Bearer secret_iNcmYgO0zH7ftoXF9SiXlyiCJw71VVmZXeqUPde6NfF`,
+          Authorization: `Bearer ${this.configService.get<string>(
+            'NOTION_API_KEY',
+          )}`,
           'Notion-Version': '2022-06-28',
         },
       })
@@ -28,7 +34,9 @@ export class PageService {
     return this.httpService
       .post(`https://api.notion.com/v1/pages/`, data, {
         headers: {
-          Authorization: `Bearer secret_iNcmYgO0zH7ftoXF9SiXlyiCJw71VVmZXeqUPde6NfF`,
+          Authorization: `Bearer ${this.configService.get<string>(
+            'NOTION_API_KEY',
+          )}`,
           'Notion-Version': '2022-06-28',
           'Content-Type': 'application/json',
         },
@@ -46,7 +54,9 @@ export class PageService {
     return this.httpService
       .patch(`https://api.notion.com/v1/pages/${pageId}`, data, {
         headers: {
-          Authorization: `Bearer secret_iNcmYgO0zH7ftoXF9SiXlyiCJw71VVmZXeqUPde6NfF`,
+          Authorization: `Bearer ${this.configService.get<string>(
+            'NOTION_API_KEY',
+          )}`,
           'Notion-Version': '2022-06-28',
           'Content-Type': 'application/json',
         },

@@ -1,7 +1,6 @@
 import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
 import { PageService } from './page.service';
 import { PageDTO, PageDTOCreate } from './page.dto';
-import { NotionRequest } from 'notion-api-types';
 
 @Controller('pages')
 export class PageController {
